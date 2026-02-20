@@ -2,6 +2,11 @@
 
 Este documento contiene las pruebas y evidencias de funcionamiento del proyecto Escrow DApp.
 
+## 0. Planificación y Documentación (Fase 0)
+- [x] **Implementation_Plan.md**: Documentación técnica del diseño del sistema.
+- [x] **Graficos.md**: Guía para la creación de diagramas en Eraser.io.
+- [x] **Discurso_video.md**: Guion detallado para la presentación final.
+
 ## 1. Setup Inicial y Estructura (Fase 1)
 Se ha creado la estructura base del proyecto dividiendo la lógica de Smart Contracts y el Frontend.
 
@@ -39,10 +44,39 @@ Se han configurado archivos `.gitignore` en tres niveles para garantizar que no 
 -   **./.gitignore (Raíz)**: Bloquea archivos de sistema (`.DS_Store`), metadatos de Windows (`*.Identifier`), estados de Anvil y carpetas de dependencias en una sola vista.
 -   **sc/.gitignore**: Específico para Foundry (`out/`, `cache/`, `broadcast/`).
 -   **web/.gitignore**: Específico para Next.js (`node_modules/`, `.next/`).
-- [ ] Captura del script `deploy.sh` ejecutándose.
-- [ ] Direcciones de los contratos desplegados.
 
-## 3. Pruebas de Frontend (UI)
+---
+
+## 2. Desarrollo de Smart Contracts (Fase 2)
+### Archivos Desarrollados:
+- [x] **Escrow.sol**: Contrato principal con la lógica de swap, custodia y seguridad.
+- [x] **MockERC20.sol**: Contrato de token auxiliar para realizar las pruebas de intercambio.
+- [x] **Escrow.t.sol**: Suite de tests unitarios para validar todo el flujo.
+
+### Tests Unitarios (Escrow.t.sol)
+Se han implementado y verificado los siguientes casos de prueba:
+- [x] **test_AddToken**: Verifica que solo el owner pueda añadir tokens.
+- [x] **test_CreateOperation**: Verifica la creación correcta de una operación y la transferencia de tokens al contrato.
+- [x] **test_CompleteOperation**: Verifica el intercambio exitoso de tokens entre las partes y el cambio de estado a `completed`.
+- [x] **test_CancelOperation**: Verifica que el creador pueda cancelar y recibir su reembolso.
+- [x] **test_Revert_...**: Verifica que las transacciones fallen correctamente (reviertan) cuando no se cumplen las condiciones de seguridad (no ser owner, intentar completar tu propia operación, cancelar operación ajena).
+
+### Resultados de Ejecución
+Los tests han pasado exitosamente (`suite result: ok. 7 passed; 0 failed`).
+
+**Evidencia Requerida:**
+- [ ] **Captura de pantalla 1**: Ejecución de `forge test -vvv` mostrando todos los tests en verde (PASS).
+- [ ] **Captura de pantalla 2**: Confirmación de la estructura de archivos con `tree -L 2` o `ls -R` (para evidenciar la Fase 1).
+
+---
+
+## 3. Automatización de Despliegue (Fase 3)
+- [ ] Captura del script `deploy.sh` ejecutándose.
+- [ ] Direcciones de los contratos desplegados en la terminal.
+
+---
+
+## 4. Pruebas de Frontend (UI)
 ### Conexión de Wallet
 - [ ] Evidencia de conexión con MetaMask.
 

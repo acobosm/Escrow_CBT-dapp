@@ -53,15 +53,24 @@ title Escrow DApp - Estructura de Proyecto (Fase 1)
 
 ---
 
-## 2. Flujo de Secuencia: Creación de Operación (Swap Init)
+---
 
-**Pasos para el diagrama en Eraser:**
-1. **Usuario A** define tokens y montos en el form.
-2. **Frontend** llama a `approve()` en el contrato del **Token A**.
-3. **Token A** confirma el permiso al contrato Escrow.
-4. **Frontend** llama a `createOperation()` en el **Escrow**.
-5. **Escrow** ejecuta `transferFrom()` para depositar los tokens del Usuario A.
-6. **Escrow** emite el evento `OperationCreated`.
+## 2. Diagrama de Secuencia: Creación de Operación (Fase 2)
+
+Código para generar el diagrama de secuencia en Eraser:
+
+```text
+title Sequence: Create Operation
+
+Usuario A -> Frontend: Input (TokenA, TokenB, Amount)
+Frontend -> TokenA: approve(Escrow, Amount)
+TokenA --> Frontend: Access Granted
+Frontend -> Escrow: createOperation(TokenA, TokenB, Amount)
+Escrow -> TokenA: transferFrom(Usuario A, Escrow, Amount)
+TokenA --> Escrow: Content Transferred
+Escrow -> Escrow: Store Operation (ID, Creator, ...)
+Escrow --> Frontend: Emit Event (OperationCreated)
+```
 
 ---
 

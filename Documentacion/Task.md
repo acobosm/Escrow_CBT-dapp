@@ -17,9 +17,9 @@ Este documento sirve para llevar un seguimiento público del avance del proyecto
 - [x] Instalación de dependencias (OpenZeppelin, Ethers.js)
 
 ## Fase 2: Desarrollo de Smart Contracts
-- [ ] Implementación de `Escrow.sol`
-- [ ] Implementación de `Escrow.t.sol` (Tests unitarios)
-- [ ] Verificación de seguridad y reentrada
+- [x] Implementación de `Escrow.sol`
+- [x] Implementación de `Escrow.t.sol` (Tests unitarios)
+- [x] Verificación de seguridad y reentrada
 
 ## Fase 3: Automatización de Despliegue
 - [ ] Script `deploy.sh`
