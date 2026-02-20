@@ -1,0 +1,30 @@
+# Blockchain (Foundry)
+sc/out/
+sc/cache/
+sc/broadcast/
+
+# Anvil State
+*_state.json
+
+# Directorio de logs
+logs/
+
+# Dependencias de Node (web)
+web/node_modules/
+web/.next/
+web/dist/
+
+# Entorno y Secretos
+.env
+.env.local
+.env.auth
+sc/.env
+web/.env*.local
+
+# Archivos de Sistema
+.DS_Store
+Thumbs.db
+*.code-workspace
+
+# Metadatos de Windows
+*.Identifier

@@ -1,0 +1,76 @@
+Este documento describe la arquitectura y los flujos para ser replicados en **Eraser.io**.
+
+## 0. Estructura del Proyecto (Fase 1)
+
+Código para generar el diagrama de cajas en Eraser:
+
+```text
+title Escrow DApp - Estructura de Proyecto (Fase 1)
+
+// Directorio raíz
+[shape: folder, color: blue] "Root Project" {
+  [shape: folder, color: blue] "sc (Smart Contracts)" {
+    [shape: folder] "src"
+    [shape: folder] "test"
+    [shape: folder] "lib"
+    [shape: folder] "script"
+    ".gitignore" [shape: file]
+  }
+  [shape: folder, color: green] "web (Frontend)" {
+    [shape: folder] "src" {
+      [shape: folder] "app"
+      [shape: folder] "components"
+      [shape: folder] "lib"
+    }
+    ".gitignore" [shape: file]
+  }
+  [shape: folder, color: yellow] "Documentacion" {
+    "Task.md" [shape: file]
+    "Implementation_Plan.md" [shape: file]
+    "Evidencias_Informe.md" [shape: file]
+  }
+}
+```
+
+---
+
+## 1. Diagrama de Arquitectura de Sistema
+
+**Elementos a dibujar en Eraser:**
+- **Actores**: 
+    - `Usuario` (Icono de persona)
+- **Componentes**:
+    - `MetaMask` (Wallet / Extension)
+    - `Frontend (Next.js 14)` (Caja principal)
+    - `Escrow Smart Contract` (Icono de contrato/blockchain)
+    - `Anvil Local Node` (Nube o servidor de red)
+
+**Conexiones:**
+1. `Usuario` -> `Frontend`: "Interacciona con la UI"
+2. `Frontend` -> `MetaMask`: "Solicita firma/conexión"
+3. `MetaMask` -> `Escrow Smart Contract`: "Envía transacciones firmadas"
+4. `Escrow Smart Contract` -> `Anvil`: "Reside en la red"
+
+---
+
+## 2. Flujo de Secuencia: Creación de Operación (Swap Init)
+
+**Pasos para el diagrama en Eraser:**
+1. **Usuario A** define tokens y montos en el form.
+2. **Frontend** llama a `approve()` en el contrato del **Token A**.
+3. **Token A** confirma el permiso al contrato Escrow.
+4. **Frontend** llama a `createOperation()` en el **Escrow**.
+5. **Escrow** ejecuta `transferFrom()` para depositar los tokens del Usuario A.
+6. **Escrow** emite el evento `OperationCreated`.
+
+---
+
+## 3. Flujo de Secuencia: Finalización de Swap (Completion)
+
+**Pasos para el diagrama en Eraser:**
+1. **Usuario B** selecciona una operación activa.
+2. **Frontend** llama a `approve()` en el contrato del **Token B**.
+3. **Frontend** llama a `completeOperation()` en el **Escrow**.
+4. **Escrow** transfiere **Token B** del Usuario B al Usuario A.
+5. **Escrow** transfiere **Token A** (en custodia) al Usuario B.
+6. Se emite `OperationCompleted` y el estado cambia a `Closed`.
