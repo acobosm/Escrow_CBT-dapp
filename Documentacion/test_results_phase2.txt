@@ -1,0 +1,18 @@
+No files changed, compilation skipped
+
+Ran 7 tests for test/Escrow.t.sol:EscrowTest
+[PASS] test_AddToken() (gas: 66160)
+[PASS] test_CancelOperation() (gas: 228806)
+[PASS] test_CompleteOperation() (gas: 298445)
+[PASS] test_CreateOperation() (gas: 233568)
+[PASS] test_Revert_AddToken_NonOwner() (gas: 14836)
+[PASS] test_Revert_CancelNonOwnedOperation() (gas: 235880)
+[PASS] test_Revert_CompleteOwnOperation() (gas: 293528)
+Suite result: ok. 7 passed; 0 failed; 0 skipped; finished in 1.68ms (2.02ms CPU time)
+
+Ran 2 tests for test/Counter.t.sol:CounterTest
+[PASS] testFuzz_SetNumber(uint256) (runs: 256, μ: 28822, ~: 29289)
+[PASS] test_Increment() (gas: 28783)
+Suite result: ok. 2 passed; 0 failed; 0 skipped; finished in 5.10ms (4.82ms CPU time)
+
+Ran 2 test suites in 9.06ms (6.78ms CPU time): 9 tests passed, 0 failed, 0 skipped (9 total tests)

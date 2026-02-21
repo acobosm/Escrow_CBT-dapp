@@ -22,8 +22,8 @@ Este documento sirve para llevar un seguimiento público del avance del proyecto
 - [x] Verificación de seguridad y reentrada
 
 ## Fase 3: Automatización de Despliegue
-- [ ] Script `deploy.sh`
-- [ ] Despliegue de contratos y tokens de prueba en Anvil
+- [x] Script `deploy.sh`
+- [x] Despliegue de contratos y tokens de prueba en Anvil
 
 ## Fase 4-10: Desarrollo Frontend (DApp)
 - [ ] Configuración de Providers y Ethers.js

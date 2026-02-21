@@ -83,3 +83,23 @@ Escrow --> Frontend: Emit Event (OperationCreated)
 4. **Escrow** transfiere **Token B** del Usuario B al Usuario A.
 5. **Escrow** transfiere **Token A** (en custodia) al Usuario B.
 6. Se emite `OperationCompleted` y el estado cambia a `Closed`.
+
+---
+
+## 4. Arquitectura de Despliegue (Fase 3)
+
+Código para generar el diagrama en Eraser:
+
+```text
+title Deployment Architecture
+
+[shape: cylinder] "Anvil (Local Node)" as node
+[shape: diamond] "DeployScript (Foundry)" as script
+[shape: folder] "Frontend (contracts.ts)" as config
+
+script -> node: 1. Deploy Escrow & Tokens
+script -> node: 2. Authorize Tokens
+script -> node: 3. Mint Initial Balances
+node --> script: Returns Addresses & Events
+script -> config: Update Addresses & ABIs
+```

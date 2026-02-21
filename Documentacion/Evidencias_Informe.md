@@ -71,8 +71,12 @@ Los tests han pasado exitosamente (`suite result: ok. 7 passed; 0 failed`).
 ---
 
 ## 3. Automatización de Despliegue (Fase 3)
-- [ ] Captura del script `deploy.sh` ejecutándose.
-- [ ] Direcciones de los contratos desplegados en la terminal.
+### Script de Automatización (deploy.sh)
+Se ha creado un script que orquestra el despliegue en Anvil y actualiza automáticamente la configuración del Frontend.
+
+**Evidencia Requerida:**
+- [ ] **Captura de pantalla 3**: Ejecución del comando `./deploy.sh` mostrando las direcciones de los contratos desplegados en la terminal.
+- [ ] **Verificación de archivo**: Captura del archivo `deployment-info.txt` generado tras el despliegue.
 
 ---
 
