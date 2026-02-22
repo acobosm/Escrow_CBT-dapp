@@ -103,3 +103,25 @@ script -> node: 3. Mint Initial Balances
 node --> script: Returns Addresses & Events
 script -> config: Update Addresses & ABIs
 ```
+
+---
+
+## 5. Jerarquía de Componentes Frontend (Fase 10)
+
+Código para generar el diagrama en Eraser:
+
+```text
+title Component Hierarchy
+
+[shape: card] "Root Layout" {
+  [shape: card] "Navigation (ConnectButton)"
+  [shape: card] "Main Dashboard" {
+    [shape: card] "Admin: AddTokenForm"
+    [shape: card] "User: CreateSwapForm"
+    [shape: card] "Market: ActiveSwapsList" {
+      [shape: card] "SwapItem (Approve/Complete)"
+    }
+  }
+  [shape: card] "Footer (DebugBalancePanel)"
+}
+```

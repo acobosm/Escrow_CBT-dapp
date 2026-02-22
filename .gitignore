@@ -1,4 +1,5 @@
 # Blockchain (Foundry)
+sc/lib/
 sc/out/
 sc/cache/
 sc/broadcast/
@@ -28,3 +29,7 @@ Thumbs.db
 
 # Metadatos de Windows
 *.Identifier
+
+# Scripts de guía y temporales
+git_fase*_guia.sh
+deployment-info.txt

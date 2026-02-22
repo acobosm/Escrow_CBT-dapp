@@ -18,10 +18,11 @@ cd sc
 OUTPUT=$(forge script script/Deploy.s.sol:DeployScript --rpc-url $RPC_URL --broadcast -vvvv)
 cd ..
 
-# Extract addresses using grep and awk
-ESCROW_ADDR=$(echo "$OUTPUT" | grep "Escrow deployed at:" | awk '{print $NF}')
-TOKEN_A_ADDR=$(echo "$OUTPUT" | grep "TokenA deployed at:" | awk '{print $NF}')
-TOKEN_B_ADDR=$(echo "$OUTPUT" | grep "TokenB deployed at:" | awk '{print $NF}')
+# Extract addresses using grep and a more robust regex
+# This regex looks for a 0x address in the line containing the label OR the following line
+ESCROW_ADDR=$(echo "$OUTPUT" | grep -A 1 "Escrow deployed at:" | grep -oE "0x[a-fA-F0-9]{40}" | head -n 1)
+TOKEN_A_ADDR=$(echo "$OUTPUT" | grep -A 1 "TokenA deployed at:" | grep -oE "0x[a-fA-F0-9]{40}" | head -n 1)
+TOKEN_B_ADDR=$(echo "$OUTPUT" | grep -A 1 "TokenB deployed at:" | grep -oE "0x[a-fA-F0-9]{40}" | head -n 1)
 
 echo "✅ Deployment Successful!"
 echo "Escrow: $ESCROW_ADDR"

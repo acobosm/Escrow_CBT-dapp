@@ -16,19 +16,40 @@ Develop a secure Escrow contract to handle token deposits and swaps.
 
 ---
 
-### [Frontend]
-Build a responsive dashboard to interact with the Escrow contract.
+### [Phases 4-10: Frontend]
+Granular development of the dashboard components.
 
-#### [NEW] [page.tsx](file:///home/ebit/projects/0%20CodeCrypto%20Academy/03%20Ethereum%20Practice/Intro%20a%20Proyectos%20de%20Entrenamiento/Proyectos%20obligatorios/04%20ESCROW/web/app/page.tsx)
-- Main entry point with grid layout for components.
+#### [Phase 4] [ethereum.tsx](file:///home/ebit/projects/0%20CodeCrypto%20Academy/03%20Ethereum%20Practice/Intro%20a%20Proyectos%20de%20Entrenamiento/Proyectos%20obligatorios/04%20ESCROW/web/src/lib/ethereum.tsx)
+- Ethereum Provider and MetaMask logic.
+
+#### [Phase 5] [ConnectButton.tsx](file:///home/ebit/projects/0%20CodeCrypto%20Academy/03%20Ethereum%20Practice/Intro%20a%20Proyectos%20de%20Entrenamiento/Proyectos%20obligatorios/04%20ESCROW/web/src/components/ConnectButton.tsx)
+- Unified wallet connection UI.
+
+#### [Phase 6] [AdminPanel.tsx](file:///home/ebit/projects/0%20CodeCrypto%20Academy/03%20Ethereum%20Practice/Intro%20a%20Proyectos%20de%20Entrenamiento/Proyectos%20obligatorios/04%20ESCROW/web/src/components/AdminPanel.tsx)
+- Interface for adding tokens (Owner only).
+
+#### [Phase 7] [CreateSwap.tsx](file:///home/ebit/projects/0%20CodeCrypto%20Academy/03%20Ethereum%20Practice/Intro%20a%20Proyectos%20de%20Entrenamiento/Proyectos%20obligatorios/04%20ESCROW/web/src/components/CreateSwap.tsx)
+- Swap creation logic with integrated token approval.
+
+#### [Phase 8] [OperationsList.tsx](file:///home/ebit/projects/0%20CodeCrypto%20Academy/03%20Ethereum%20Practice/Intro%20a%20Proyectos%20de%20Entrenamiento/Proyectos%20obligatorios/04%20ESCROW/web/src/components/OperationsList.tsx)
+- Active swap monitoring and interaction (Accept/Cancel).
+
+#### [Phase 9] [DebugPanel.tsx](file:///home/ebit/projects/0%20CodeCrypto%20Academy/03%20Ethereum%20Practice/Intro%20a%20Proyectos%20de%20Entrenamiento/Proyectos%20obligatorios/04%20ESCROW/web/src/components/DebugPanel.tsx)
+- Balance tracker for testing.
+
+#### [Phase 10] [page.tsx](file:///home/ebit/projects/0%20CodeCrypto%20Academy/03%20Ethereum%20Practice/Intro%20a%20Proyectos%20de%20Entrenamiento/Proyectos%20obligatorios/04%20ESCROW/web/src/app/page.tsx)
+- Full dashboard assembly.
 
 ---
 
-### [Deployment]
-Automation for local testing and deployment.
+### [Phase 11: Error Handling]
+- Global catch for reverted transactions.
+- Zero-state handling (no tokens, no operations).
 
-#### [NEW] [deploy.sh](file:///home/ebit/projects/0%20CodeCrypto%20Academy/03%20Ethereum%20Practice/Intro%20a%20Proyectos%20de%20Entrenamiento/Proyectos%20obligatorios/04%20ESCROW/deploy.sh)
-- script to deploy contracts and update frontend config.
+---
+
+### [Phase 12: Deployment & Verification]
+- Automation script and E2E swap confirmation.
 
 ## Verification Plan
 

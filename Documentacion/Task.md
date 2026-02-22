@@ -25,15 +25,32 @@ Este documento sirve para llevar un seguimiento público del avance del proyecto
 - [x] Script `deploy.sh`
 - [x] Despliegue de contratos y tokens de prueba en Anvil
 
-## Fase 4-10: Desarrollo Frontend (DApp)
-- [ ] Configuración de Providers y Ethers.js
-- [ ] Componente Conexión (ConnectButton)
-- [ ] Interfaz de Administración (AddToken)
-- [ ] Interfaz de Usuario (CreateOperation)
-- [ ] Lista de Operaciones (Active/Closed)
-- [ ] Panel de Debug de Balances (3 columnas)
+## Fase 4: Frontend - Setup Base
+- [x] Configuración de Next.js 14 y ethers.js v6
+- [x] Provider de Ethereum (`ethereum.tsx`)
 
-## Fase 11-12: Pulido y Pruebas
-- [ ] Manejo de errores y estados de carga
-- [ ] Pruebas End-to-End finales
-- [ ] Grabación de video y recolección de evidencias
+## Fase 5: Componente de Conexión
+- [x] Implementación de `ConnectButton.tsx` (MetaMask)
+
+## Fase 6: Componente AddToken (Admin)
+- [x] Implementación de `AddToken.tsx` (Interfaz Owner)
+
+## Fase 7: Componente CreateOperation
+- [x] Implementación de `CreateOperation.tsx` (Approve + Create)
+
+## Fase 8: Componente OperationsList
+- [x] Implementación de `OperationsList.tsx` (Polling 10s)
+
+## Fase 9: Componente BalanceDebug
+- [x] Implementación de `BalanceDebug.tsx` (Monitor 3 columnas)
+
+## Fase 10: Página Principal
+- [x] Ensamblaje en `app/page.tsx` (Grid 3 columnas)
+
+## Fase 11: Manejo de Errores
+- [x] Try-catch en llamadas a contrato
+- [x] Feedback visual para el usuario (Alertas descriptivas de saldo)
+
+## Fase 12: Testing End-to-End
+- [x] Ciclo de prueba completo (2 cuentas - TKA por TKD)
+- [x] Verificación de balances finales y contraste de UI

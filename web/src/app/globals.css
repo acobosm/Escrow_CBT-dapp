@@ -1,0 +1,58 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #fdfdfd;
+  --foreground: #0f172a;
+  --primary: #2563eb;
+  --primary-foreground: #ffffff;
+  --secondary: #64748b;
+  --accent: #f59e0b;
+  --card: #ffffff;
+  --card-border: #e2e8f0;
+  --glass: rgba(255, 255, 255, 0.7);
+  --glass-border: rgba(255, 255, 255, 0.3);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #020617;
+    --foreground: #f8fafc;
+    --primary: #3b82f6;
+    --secondary: #94a3b8;
+    --card: #0f172a;
+    --card-border: #1e293b;
+    --glass: rgba(15, 23, 42, 0.7);
+    --glass-border: rgba(30, 41, 59, 0.5);
+  }
+}
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+  background-image: radial-gradient(circle at 50% -20%, var(--primary), transparent 40%),
+                    radial-gradient(circle at 0% 50%, rgba(37, 99, 235, 0.05), transparent 30%),
+                    radial-gradient(circle at 100% 50%, rgba(245, 158, 11, 0.05), transparent 30%);
+  min-height: 100vh;
+}
+
+@layer components {
+  .glass-card {
+    @apply bg-[var(--glass)] backdrop-blur-md border border-[var(--glass-border)] rounded-2xl shadow-xl overflow-hidden;
+  }
+  
+  .btn-primary {
+    @apply px-4 py-2 bg-[var(--primary)] text-[var(--primary-foreground)] rounded-lg font-medium transition-all hover:opacity-90 active:scale-95 disabled:opacity-50 disabled:pointer-events-none;
+  }
+
+  .btn-outline {
+    @apply px-4 py-2 border border-[var(--primary)] text-[var(--primary)] rounded-lg font-medium transition-all hover:bg-[var(--primary)] hover:text-white active:scale-95;
+  }
+}
+
+@layer utilities {
+  .text-gradient {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-[var(--primary)] to-[var(--accent)];
+  }
+}
