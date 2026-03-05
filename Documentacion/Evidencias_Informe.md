@@ -35,6 +35,17 @@ cast send 0xdc64a17e4a32263e25133744096012855c5323c1 "mint(address,uint256)" 0x7
 cast send 0x0165878a594ca255338adfa4d48449f69242eb8f "mint(address,uint256)" 0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266 1000000000000000000000 --rpc-url http://127.0.0.1:8545 --private-key 0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80
 ```
 
+### CONSULTA DE TOKENS AUTORIZADOS (Cast)
+Usa estos comandos para verificar qué tokens están registrados en el contrato Escrow (índices 0 a 4):
+
+```bash
+# Consultar dirección en el índice 0 (Generalmente TKA)
+cast call 0x322813Fd9A801c5507c9de605d63CEA4f2CE6c44 "allowedTokensList(uint256)" 0
+
+# Consultar dirección en el índice 4 (Último token añadido, ej: Diamond)
+cast call 0x322813Fd9A801c5507c9de605d63CEA4f2CE6c44 "allowedTokensList(uint256)" 4
+```
+
 ---
 
 ## 0. Planificación y Documentación (Fase 0)
@@ -185,3 +196,107 @@ Realizar un intercambio completo entre dos cuentas diferentes usando un token nu
 
 ---
 **Resultado Final**: El sistema ESCROW es estable, seguro y cumple con todos los requisitos de la Fase 12.
+
+---
+
+## 🧪 Plan de Pruebas Versión 2 (V2 Test Plan)
+
+Para validar las nuevas funcionalidades de la Versión 2, se deben seguir estos pasos:
+
+### Fase A: Fábrica de Tokens y Minteo (Deploy New)
+1.  **Despliegue**: Acceder a "Deploy New", crear un token "DIAMANTE" (DIAM).
+2.  **Minteo**: Seleccionar las Cuentas #2 y #4. Ingresar monto "5000".
+3.  **Verificación**: Cambiar a Cuentas #2 y #4 en MetaMask y verificar que el Balance Panel muestra 5000 DIAM.
+
+### Fase B: Importación y Alias (Public Net Ready)
+1.  **Simulación Sepolia**: En Anvil, desplegar un token manualmente (o usar la dirección de uno ya creado).
+2.  **Import**: Usar "Import Existing" con esa dirección y poner un alias personalizado (ej: "SÚPER-TOKEN").
+3.  **Verificación**: Comprobar que en los dropdowns de "Create Swap" aparece el alias "SÚPER-TOKEN" en lugar de la dirección hexadecimal.
+
+#### 🌍 Guía de Conexión a Red Sepolia (Producción/Testnet)
+Para llevar las pruebas más allá de Anvil:
+1.  **MetaMask**: Habilitar "Show test networks" en ajustes de red y elegir **Sepolia**.
+2.  **Gas**: Obtener Sepolia ETH desde `sepoliafaucet.com`.
+3.  **Token LINK**: Usar la dirección oficial de Chainlink en Sepolia: `0x779873293021A439970c24636759b21C92C79081`.
+4.  **Acción**: Importar esta dirección en la DApp como "LINK". Esto demuestra la capacidad de la DApp de interactuar con contratos reales fuera del entorno local.
+
+### Fase C: Seguridad de Eliminación (Safe Removal)
+1.  **Aislamiento**: Crear un swap activo usando el token "DIAMANTE".
+2.  **Intento de Borrado**: Ir a la lista de tokens autorizados e intentar borrar DIAMANTE (X naranja).
+3.  **Resultado**: El sistema debe lanzar un error o bloquear la transacción indicando que el token está en uso.
+4.  **Limpieza**: Cancelar el swap de DIAMANTE y volver a intentar el borrado. Esta vez debe ser exitoso.
+
+### Fase D: Protección de Base Tokens
+1.  **V1 Protection**: Verificar que para **TKA** y **TKB** no existe el botón de borrar (X), garantizando la integridad de los tokens base del proyecto.
+
+### Fase E: Validaciones de UI (Safeguards)
+1.  **Cuentas**: Intentar desplegar sin marcar cuentas. Resultado: Bloqueo y mensaje *"Please select at least one account..."*.
+2.  **Montos**: Intentar desplegar con monto 0. Resultado: Bloqueo y mensaje *"Please specify a valid mint amount."*.
+
+---
+
+## 🛠️ Resultados de Pruebas Automatizadas (Foundry)
+
+Se han implementado y verificado **10 pruebas unitarias** que cubren el 100% de la lógica crítica del contrato `Escrow`.
+
+```bash
+Ran 10 tests for test/Escrow.t.sol:EscrowTest
+[PASS] test_AddToken()
+[PASS] test_CancelOperation()
+[PASS] test_CompleteOperation()
+[PASS] test_CreateOperation()
+[PASS] test_DeployAndAddToken() (V2 Factory)
+[PASS] test_RemoveToken() (V2 Removal)
+[PASS] test_Revert_AddToken_NonOwner()
+[PASS] test_Revert_CancelNonOwnedOperation()
+[PASS] test_Revert_CompleteOwnOperation()
+[PASS] test_Revert_RemoveTokenWithActiveSwap() (V2 Safety)
+Suite result: ok. 10 passed; 0 failed; 0 skipped
+```
+
+---
+
+## 🚀 Infraestructura y Monitoreo (tmux + Persistencia)
+
+Se ha implementado un entorno de desarrollo profesional para mantener el historial de la blockchain y monitorear los logs en tiempo real.
+
+### Fase F: Consola Dual y Persistencia
+1.  **Archivo de Estado**: Se utiliza `anvil_state.json` en la raíz para guardar contratos y balances.
+2.  **Ejecución**:
+    ```bash
+    chmod +x dev-dash.sh
+    ./dev-dash.sh
+    ```
+3.  **Resultado**: 
+    - Panel Izquierdo: **Anvil** cargando estado previo.
+    - Panel Derecho: **Next.js** servidor de desarrollo.
+
+### Guía de Atajos Rápidos (Tmux)
+
+| Acción | Comando |
+| :--- | :--- |
+| **Moverse entre Paneles** | `Ctrl + b` y luego `Flechas` (← ↑ → ↓) |
+| **Salir (Sin detener servicios)** | `Ctrl + b` y luego `d` (Detach) |
+| **Volver a entrar (Re-attach)** | `tmux attach-session -t escrow-dev` |
+| **Cerrar todo (Kill session)** | `tmux kill-session -t escrow-dev` |
+| **Maximizar panel actual** | `Ctrl + b` y luego `z` |
+
+> [!NOTE]
+> Para que el estado de la blockchain se guarde correctamente en `anvil_state.json`, recuerda entrar al panel de Anvil y usar `Ctrl + C` antes de cerrar la sesión de tmux.
+
+### 💡 Diferencia entre `dev-dash.sh` y `deploy.sh`
+
+Es muy importante entender que estos dos scripts tienen propósitos distintos:
+
+1.  **`dev-dash.sh` (Infraestructura)**: Prepara la "máquina" (Anvil) y la "web" (NextJS). Activa la persistencia para que Anvil pueda guardar y cargar datos. Pero **no crea los tokens** por sí mismo.
+2.  **`deploy.sh` (Contenido)**: Es el que "instala" tus Smart Contracts (Escrow, TKA, TKB) dentro de la máquina Anvil que ya está corriendo.
+
+**El Flujo Correcto la primera vez:**
+1.  Lanza `./dev-dash.sh`.
+2.  En una **nueva terminal**, lanza `./deploy.sh`.
+3.  ¡Listo! Los contratos ahora están en Anvil y guardados en tu archivo de persistencia.
+
+A partir de este punto, si cierras todo y vuelves a abrir solo con `./dev-dash.sh`, **tus tokens seguirán ahí** porque ya fueron "grabados" en el archivo de estado.
+
+> [!CAUTION]
+> **Sobre el re-despliegue (`deploy.sh`)**: Ejecutar este script creará **nuevas instancias** de los contratos. Aunque no rompe la blockchain, hará que la web apunte a nuevas direcciones vacías, haciendo que tus swaps y tokens anteriores se vuelvan "invisibles" para la interfaz actual. Úsalo solo si quieres resetear el proyecto desde cero.

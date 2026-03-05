@@ -124,4 +124,37 @@ title Component Hierarchy
   }
   [shape: card] "Footer (DebugBalancePanel)"
 }
+
+---
+
+## 🚀 Gráficos Versión 2 (Nuevos)
+
+### 3. Diagrama de Fábrica de Tokens (Escrow Factory)
+**Código para Eraser:**
+```text
+title Escrow Token Factory Flow
+
+Administrador -> Escrow: deployAndAddToken("Oro", "GLD")
+Escrow -> MockERC20: new MockERC20("Oro", "GLD")
+MockERC20 --> Escrow: address_new_token
+Escrow -> Escrow: addToken(address_new_token)
+Escrow -> MockERC20: mint(selected_accounts, amount)
+Note right of Administrador: UI Validate: accounts > 0 && amount > 0
+Escrow --> Administrador: Token Deployed & Registered ✅
+```
+
+### 4. Diagrama Multi-Network (Sepolia / Public Nets)
+**Código para Eraser:**
+```text
+title Multi-Network Connectivity
+
+[shape: cloud] "Public Network (Sepolia)" as net
+[shape: card] "Contract: LINK (0x7798...)" as link
+[shape: card] "Contract: Escrow" as escrow
+
+Administrador -> escrow: importExisting(address_link)
+escrow -> net: verify(address_link)
+net --> escrow: Valid ERC20
+escrow -> escrow: Add to WhiteList
+escrow --> Administrador: LINK Authorized in DApp 🌐
 ```

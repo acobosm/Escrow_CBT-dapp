@@ -3,7 +3,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { ethers } from "ethers";
 import { useEthereum } from "@/lib/ethereum";
-import { getEscrowContract, getTokenContract, getTokenDisplayName } from "@/lib/contracts-utils";
+import { getEscrowContract, getTokenContract, getTokenDisplayName, handleError } from "@/lib/contracts-utils";
 import { ESCROW_ADDRESS } from "@/lib/contracts";
 
 export default function CreateSwap() {
@@ -63,6 +63,12 @@ export default function CreateSwap() {
             const parsedAmountA = ethers.parseEther(amountA);
             const parsedAmountB = ethers.parseEther(amountB);
 
+            // Pre-check balance to be extra helpful
+            const balance = await tA.balanceOf(account);
+            if (balance < parsedAmountA) {
+                throw new Error("Execution reverted: Insufficient balance");
+            }
+
             // Check allowance
             const allowance = await tA.allowance(account, ESCROW_ADDRESS);
 
@@ -83,7 +89,7 @@ export default function CreateSwap() {
             setAmountB("");
             setStep("idle");
         } catch (err: any) {
-            setMessage({ type: "error", text: err.reason || err.message || "Failed to create swap" });
+            setMessage({ type: "error", text: handleError(err) });
             setStep("idle");
         } finally {
             setIsLoading(false);

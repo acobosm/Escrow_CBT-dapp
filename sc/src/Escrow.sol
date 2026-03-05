@@ -6,6 +6,7 @@ import {
     ReentrancyGuard
 } from "openzeppelin-contracts/contracts/utils/ReentrancyGuard.sol";
 import {IERC20} from "openzeppelin-contracts/contracts/token/ERC20/IERC20.sol";
+import {MockERC20} from "../test/MockERC20.sol";
 
 contract Escrow is Ownable, ReentrancyGuard {
     struct Operation {
@@ -26,6 +27,7 @@ contract Escrow is Ownable, ReentrancyGuard {
     address[] public allowedTokensList;
 
     event TokenAdded(address indexed token);
+    event TokenRemoved(address indexed token);
     event OperationCreated(
         uint256 indexed id,
         address indexed creator,
@@ -39,13 +41,66 @@ contract Escrow is Ownable, ReentrancyGuard {
 
     constructor() Ownable(msg.sender) {}
 
-    function addToken(address _token) external onlyOwner {
+    function addToken(address _token) public onlyOwner {
         require(_token != address(0), "Invalid token address");
         require(!isTokenAllowed[_token], "Token already allowed");
 
         isTokenAllowed[_token] = true;
         allowedTokensList.push(_token);
         emit TokenAdded(_token);
+    }
+
+    /**
+     * @dev Deploys a new MockERC20 token and adds it to the whitelist.
+     * Also mints initial supply to selected accounts.
+     */
+    function deployAndAddToken(
+        string memory name,
+        string memory symbol,
+        address[] memory mintTo,
+        uint256[] memory amounts
+    ) external onlyOwner returns (address) {
+        require(mintTo.length == amounts.length, "Array mismatch");
+
+        MockERC20 newToken = new MockERC20(name, symbol);
+        address tokenAddr = address(newToken);
+
+        for (uint256 i = 0; i < mintTo.length; i++) {
+            newToken.mint(mintTo[i], amounts[i]);
+        }
+
+        addToken(tokenAddr);
+        return tokenAddr;
+    }
+
+    function removeToken(address _token) external onlyOwner {
+        require(isTokenAllowed[_token], "Token not in whitelist");
+
+        // Check for active swaps involving this token
+        for (uint256 i = 0; i < _nextOperationId; i++) {
+            if (operations[i].active) {
+                require(
+                    operations[i].tokenA != _token &&
+                        operations[i].tokenB != _token,
+                    "Token busy in active swap"
+                );
+            }
+        }
+
+        isTokenAllowed[_token] = false;
+
+        // Remove from list (inefficient but safe for small lists)
+        for (uint256 i = 0; i < allowedTokensList.length; i++) {
+            if (allowedTokensList[i] == _token) {
+                allowedTokensList[i] = allowedTokensList[
+                    allowedTokensList.length - 1
+                ];
+                allowedTokensList.pop();
+                break;
+            }
+        }
+
+        emit TokenRemoved(_token);
     }
 
     function createOperation(

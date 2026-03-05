@@ -51,7 +51,7 @@ export default function DebugPanel() {
             }));
             setTokenBalances(newBalances);
         } catch (err) {
-            console.error("Error fetching debug balances:", err);
+            console.error("Error fetching balances:", err);
         }
     }, [account, provider, signer, tokenNames]);
 
@@ -74,10 +74,10 @@ export default function DebugPanel() {
             <button
                 onClick={() => setIsCollapsed(false)}
                 className="fixed bottom-4 right-4 bg-[var(--primary)] text-white p-3 rounded-full shadow-lg z-50 hover:scale-110 transition-transform font-bold text-xs flex items-center gap-2"
-                title="Open Balances"
+                title="Open My Wallet"
             >
                 <span className="mb-0.5">💰</span>
-                Balances
+                My Balances
             </button>
         );
     }
@@ -86,8 +86,8 @@ export default function DebugPanel() {
         <div className="fixed bottom-4 left-4 right-4 md:left-auto md:w-80 glass-card p-4 text-xs font-mono flex flex-col gap-2 z-50 shadow-2xl transition-all">
             <div className="flex justify-between items-center border-b border-[var(--glass-border)] pb-2 mb-1">
                 <div className="flex items-center gap-2">
-                    <span className="text-[var(--primary)] text-sm">📊</span>
-                    <span className="font-bold uppercase opacity-60">My Balances (Debug)</span>
+                    <span className="text-[var(--primary)] text-sm">🏛️</span>
+                    <span className="font-bold uppercase opacity-60">My Account Balances</span>
                 </div>
                 <div className="flex gap-3">
                     <button onClick={fetchBalances} className="hover:text-[var(--primary)] transition-colors" title="Refresh">↻</button>
@@ -97,7 +97,7 @@ export default function DebugPanel() {
 
             <div className="max-h-[30vh] overflow-y-auto pr-1 custom-scrollbar">
                 <div className="flex justify-between items-center py-2">
-                    <span className="opacity-70">ETH (Anvil):</span>
+                    <span className="opacity-70">(Anvil) ETH:</span>
                     <span className="font-bold text-[var(--foreground)]">{parseFloat(ethBalance).toFixed(4)}</span>
                 </div>
 

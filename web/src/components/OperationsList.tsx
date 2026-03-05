@@ -3,7 +3,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { ethers } from "ethers";
 import { useEthereum } from "@/lib/ethereum";
-import { getEscrowContract, getTokenContract, getTokenDisplayName } from "@/lib/contracts-utils";
+import { getEscrowContract, getTokenContract, getTokenDisplayName, handleError } from "@/lib/contracts-utils";
 import { ESCROW_ADDRESS } from "@/lib/contracts";
 
 interface Operation {
@@ -94,9 +94,7 @@ export default function OperationsList() {
             await completeTx.wait();
             fetchOperations();
         } catch (err: any) {
-            console.error("Error completing operation:", err);
-            const errorMsg = err.reason || err.message || "Unknown error";
-            alert(`Failed to complete swap: ${errorMsg}`);
+            alert(handleError(err));
         } finally {
             setActionLoading(null);
         }
@@ -111,8 +109,7 @@ export default function OperationsList() {
             await tx.wait();
             fetchOperations();
         } catch (err) {
-            console.error("Error cancelling operation:", err);
-            alert("Failed to cancel operation");
+            alert(handleError(err));
         } finally {
             setActionLoading(null);
         }

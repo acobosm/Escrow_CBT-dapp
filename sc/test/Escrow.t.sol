@@ -155,4 +155,54 @@ contract EscrowTest is Test {
         vm.expectRevert("Only creator can cancel");
         escrow.cancelOperation(0);
     }
+
+    // --- Version 2 Tests ---
+
+    function test_DeployAndAddToken() public {
+        vm.startPrank(owner);
+        address[] memory accounts = new address[](2);
+        accounts[0] = userA;
+        accounts[1] = userB;
+        uint256[] memory amounts = new uint256[](2);
+        amounts[0] = 500 ether;
+        amounts[1] = 500 ether;
+
+        address newToken = escrow.deployAndAddToken(
+            "New Token",
+            "NEW",
+            accounts,
+            amounts
+        );
+
+        assertTrue(escrow.isTokenAllowed(newToken));
+        assertEq(MockERC20(newToken).balanceOf(userA), 500 ether);
+        assertEq(MockERC20(newToken).balanceOf(userB), 500 ether);
+        vm.stopPrank();
+    }
+
+    function test_RemoveToken() public {
+        vm.startPrank(owner);
+        address tokenToRemove = address(tokenB);
+        escrow.removeToken(tokenToRemove);
+        assertFalse(escrow.isTokenAllowed(tokenToRemove));
+        vm.stopPrank();
+    }
+
+    function test_Revert_RemoveTokenWithActiveSwap() public {
+        // Create active swap for Token B
+        vm.startPrank(userA);
+        tokenA.approve(address(escrow), 10 ether);
+        escrow.createOperation(
+            address(tokenA),
+            address(tokenB),
+            10 ether,
+            20 ether
+        );
+        vm.stopPrank();
+
+        // Attempt to remove Token B should fail
+        vm.prank(owner);
+        vm.expectRevert("Token busy in active swap");
+        escrow.removeToken(address(tokenB));
+    }
 }

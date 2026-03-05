@@ -44,6 +44,11 @@ Este guion está diseñado para una presentación detallada de aproximadamente 1
 - **Voz**: "Como Usuario 1, deposito 100 TKA y pido 50 TKB. Noten cómo MetaMask me pide dos firmas. Ahora cambiamos al Usuario 2. Él ve la oferta en el panel central, decide aceptarla y, tras confirmar, el contrato realiza el swap atómico instantáneamente."
 - **Cancelación**: Mostrar qué pasa si el Usuario 1 decide recuperar sus fondos antes de que alguien acepte la oferta.
 
-## 8. Desafíos y Conclusiones (11:00 - 12:00)
-- **Voz**: "El mayor desafío fue gestionar los estados asíncronos de la blockchain y asegurar que la UI siempre refleje la verdad del contrato. En el futuro, me gustaría añadir un sistema de reputación para los usuarios y soporte para múltiples redes (multi-chain)."
-- **Despedida**: "Este proyecto ha sido una gran oportunidad para dominar el stack completo de desarrollo Web3. Mi nombre es [Tu Nombre], ¡y gracias por acompañarme!"
+## 9. Evolución a Versión 2: Fábrica de Tokens (11:00 - 12:00)
+- **Visual**: Pestaña "Deploy New" en el Admin Panel.
+- **Voz**: "Pero no nos detuvimos ahí. En la Versión 2 hemos convertido el Escrow en una verdadera fábrica de tokens. Ahora el administrador puede crear nuevos contratos ERC20 directamente desde la interfaz, asignarles nombre y ticker, y lo más interesante: realizar un minteo selectivo a cuentas específicas de Anvil para pruebas inmediatas."
+- **Seguridad**: "También implementamos una eliminación segura de tokens, asegurando que ningún activo se desliste si hay swaps activos que lo utilicen."
+
+## 10. Desafíos, Redes Públicas y Conclusiones (12:00 - 13:00)
+- **Voz**: "La DApp es multi-red. Usando la función 'Import Existing', podemos autorizar tokens de redes públicas reales como Sepolia, como por ejemplo LINK o WETH, simplemente pegando su dirección. El sistema es escalable y está listo para producción."
+- **Despedida**: "Este proyecto ha evolucionado de un simple escrow a una suite de gestión de activos P2P. Mi nombre es [Tu Nombre], ¡y gracias por acompañarme!"
